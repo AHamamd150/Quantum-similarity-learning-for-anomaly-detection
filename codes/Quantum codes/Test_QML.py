@@ -7,26 +7,16 @@ import sys
 from sklearn.datasets import make_classification
 from tqdm import tqdm
 #####################################
-x_train1 = np.load('x0.npz',allow_pickle=True)['arr_0']
-x_train2 = np.load('x1.npz',allow_pickle=True)['arr_0']
+x_train_1 = np.load('x0.npz',allow_pickle=True)['arr_0']
+x_train_2 = np.load('x1.npz',allow_pickle=True)['arr_0']
 
-x_train_1 = x_train1[:10000]
-x_train_2 = x_train2[:10000]
+x_test = np.load('x3.npz',allow_pickle=True)['arr_0']
 
-x_test_1 = x_train1[:1_000]
-x_test_2 = x_train2[:1_000]
-
-y_test_2 = np.ones(len(x_test_1))
-y_test_1 = np.zeros(len(x_test_2))
-
-x_test = np.concatenate((x_test_1,x_test_2))
-y_test = np.concatenate((y_test_1,y_test_2))
 
 print(f'Train shape:  {x_train_1.shape} , Test shape:  {x_test_1.shape}  ')
 #######################
 qubits = 6
 num_layers= 4
-epoch= 10
 batch_size=128
 #####################################
 def embedding_qlayer(x):
