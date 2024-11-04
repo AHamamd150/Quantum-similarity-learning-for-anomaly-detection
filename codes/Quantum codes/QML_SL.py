@@ -464,8 +464,8 @@ b3.point_size = [10,10]
 b3.point_marker=['o','o'] 
 b3.xlabel=['', '']
 b3.ylabel=['', '']
-b3.add_points([np.array(expX0_2).flatten()/1.2,np.array(expY0_2).flatten()/1.2,np.array(expZ0_2).flatten()/1.2])
-b3.add_points([np.array(expX1_2).flatten()/1.32,np.array(expY1_2).flatten()/1.32,np.array(expZ1_2).flatten()/1.32])
+b3.add_points([np.array(expX0_2).flatten(),np.array(expY0_2).flatten(),np.array(expZ0_2).flatten()])
+b3.add_points([np.array(expX1_2).flatten(),np.array(expY1_2).flatten(),np.array(expZ1_2).flatten()])
 #b2.point_color=['tab:blue','tab:orange']
 #b2.view=[-10,10]
 b3.zlpos = [1.2, -1.35]
