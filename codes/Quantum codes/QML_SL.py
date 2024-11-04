@@ -190,13 +190,6 @@ def create_Part_classifier():
 ######################################################
 embedding_network = create_Part_classifier()
 embedding_network.summary()
-#######################################################
-
-
-#####################
-####
-Model_HS = Model(embedding_network.input,embedding_network.layers[-2].output)
-
 #################################
 # define the number of qubits #############
 # define the number of repeated quantum layers#
@@ -294,11 +287,6 @@ def cost(weights, A, B):
     d_hs = -ab + aa 
     return 1 - d_hs    
     
-def make_pairs(x, y):
-    pairs = []
-    for idx1,idx2 in zip(x,y): 
-        pairs += [[idx1, idx2]]
-    return np.array(pairs)
 ####################################################################
 from pennylane.optimize import AdamOptimizer 
 opt = AdamOptimizer()
