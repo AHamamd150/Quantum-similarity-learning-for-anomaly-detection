@@ -273,18 +273,16 @@ def iterate_minibatches(inputs, targets, batch_size):
 ####################################
 ## Define the quantum loss function ###########
 ####################################
-def overlaps(params,out1,out2):
-    swap = 0
-    for i in range(len(out1)): 
-        output2 = np.concatenate([out1[i],out2[i]],0)
-        output_2 = qcircuit(params,output2)
-        swap += output_2 
-    return swap
+#def overlaps(params,out1,out2):
+#    swap = 0
+#    for i in range(len(out1)): 
+#        output2 = np.concatenate([out1[i],out2[i]],0)
+#        output_2 = qcircuit(params,output2)
+#        swap += output_2 
+#    return swap
     
-def cost(weights, A, B):
-    aa = overlaps(weights,A, augment(A))
-    ab = overlaps(weights,A,B)
-    d_hs = -ab + aa 
+def cost(A, B):
+    d_hs = -A + B 
     return 1 - d_hs    
     
 ####################################################################
@@ -296,11 +294,11 @@ opt = AdamOptimizer()
 for it in range(epoch):
   print(f'Run Epoch number: {it+1}')
   q = 0
-  for xbatch1,xbatch2 in iterate_minibatches(pairs_train[:1000,0], pairs_train[:1000,1], batch_size=batch_size):
+  for xbatch1,xbatch2 in iterate_minibatches(pairs_train[:,0], pairs_train[:,1], batch_size=batch_size):
     q+=1
-    xbatch1_ = np.array(Model_HS(xbatch1))
-    xbatch2_ = np.array(Model_HS(xbatch2))
-    params= opt.step(cost,params,xbatch1_,xbatch2_)
+    xbatch1_ = np.array(Model_HS(xbatch1,augment(xbatch1)))
+    xbatch2_ = np.array(Model_HS(xbatch1,xbatch2))
+    params= opt.step(cost,xbatch1_,xbatch2_)
     print(cost(params,xbatch1_,xbatch2_))
     sys.stdout.write('\r'+ 'Processing batch No: %s / %s '%(q,len(xbatch1)))
    
